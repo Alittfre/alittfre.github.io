@@ -24,11 +24,11 @@ export default defineConfigWithTheme<ThemeConfig>({
     ['link', { rel: "stylesheet", href: "https://unpkg.com/gitalk/dist/gitalk.css" }],
     ['script', { src: 'https://unpkg.com/gitalk/dist/gitalk.min.js' }]
   ],
-  title: 'Sensei\'s 部落格',
-  description: 'Sensei\'s 部落格',
+  title: 'Alittfre\'s 部落格',
+  description: 'Alittfre\'s 部落格',
   themeConfig: {
     //banner区配置
-    name: 'Sensei\'s 部落格',
+    name: 'Alittfre\'s 部落格',
     banner: '/banner.jpg',
     welcomeText: 'Hello, VitePress',
     avatar: '/avatar.jpg',
