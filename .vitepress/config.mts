@@ -39,11 +39,11 @@ export default defineConfigWithTheme<ThemeConfig>({
     ],
 
     //gitalk配置
-    clientID: '',
-    clientSecret: '',
-    repo: '',
-    owner: '',
-    admin: ['']
+    clientID: 'b6b3d66e51f899071b8f',
+    clientSecret: '48b95ecc7849d0f2785589c0db80ece42db833c2',
+    repo: 'alittfre.github.io',
+    owner: 'Alittfre',
+    admin: ['Alittfre']
   },
   markdown: {
     theme: 'github-light',
