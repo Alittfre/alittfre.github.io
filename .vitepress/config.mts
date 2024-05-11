@@ -2,9 +2,7 @@ import { defineConfigWithTheme } from 'vitepress'
 export interface ThemeConfig {
   //banner
   name: string
-  banner: string
   welcomeText: string
-  avatar: string
   motto: string
   social: { icon: string; url: string }[]
 
@@ -24,18 +22,17 @@ export default defineConfigWithTheme<ThemeConfig>({
     ['link', { rel: 'stylesheet', href: 'https://unpkg.com/gitalk/dist/gitalk.css' }],
     ['script', { src: 'https://unpkg.com/gitalk/dist/gitalk.min.js' }],
   ],
+  ignoreDeadLinks: true,
   title: "Alittfre's 部落格",
   description: "Alittfre's 部落格",
   themeConfig: {
     //banner区配置
     name: "Alittfre's 部落格",
-    banner: '/banner.jpg',
     welcomeText: 'Hello, VitePress',
-    avatar: '/avatar.jpg',
-    motto: '何気ない日常で、ほんの少しの奇跡を見つける物語。',
+    motto: "You Forget A Thousand Things Every Day Pal. Make Sure This Is One Of 'Em.",
     social: [
-      { icon: '/github.svg', url: 'https://github.com/' },
-      { icon: '/bilibili.svg', url: 'https://www.bilibili.com/' },
+      { icon: 'github', url: 'https://github.com/Alittfre' },
+      { icon: 'bilibili', url: 'https://space.bilibili.com/7663236' },
     ],
 
     //gitalk配置
