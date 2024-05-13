@@ -7,15 +7,15 @@
 </template>
 <script setup lang="ts">
 import { data as posts, type PostData } from '../utils/posts.data'
-import { ref, onMounted } from 'vue'
+import { ref, watch, onUnmounted } from 'vue'
 import { useStore } from '../store'
 
 const active = ref<string | null>(null)
 const tagData: Record<string, PostData[]> = {}
 const { state } = useStore()
+
 const setTag = (tag: string) => {
   active.value = tag
-  history.replaceState(null, document.title, '?q=' + tag)
   state.selectedPosts = tagData[tag] || []
   state.currTag = tag
 }
@@ -28,10 +28,14 @@ for (const post of posts) {
   }
 }
 
-onMounted(() => {
-  state.selectedPosts = []
-  active.value = new URLSearchParams(location.search).get('q')
-  setTag(active.value || '')
+setTag(state.currTag)
+
+watch(() => state.currTag, () => {
+  setTag(state.currTag)
+})
+
+onUnmounted(() => {
+  setTag('')
 })
 </script>
 <style scoped lang="less">
