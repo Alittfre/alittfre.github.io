@@ -2,49 +2,35 @@
   <div class="container">
     <TransitionGroup class="DocsList" name="list" tag="ul">
       <li class="Doc" v-for="post in postsList" :key="post.href">
-        <span class="title"
-          ><a :href="base + post.href">{{ post.title }}</a></span
-        >
-        <span class="publishTime HeadLine"
-          >发布于 {{ formatDate(post.create) }} | 约{{ post.wordCount }}字</span
-        >
-        <ul class="tags HeadLine" v-if="click">
+        <span class="title"><a :href="base + post.href">{{ post.title }}</a></span>
+        <span class="publishTime HeadLine">发布于 {{ formatDate(post.create) }} | 约{{ post.wordCount }}字</span>
+        <ul class="tags HeadLine">
           <li v-for="tag in post.tags">
-            <a href="#" @click="click(tag)">{{ tag }}</a>
-          </li>
-        </ul>
-        <ul class="tags HeadLine" v-else>
-          <li v-for="tag in post.tags">
-            <a :href="`${base}tags/?q=${tag}`">{{ tag }}</a>
+            <a :href="`${base}tags/`" @click="state.currTag = tag"><i class="iconfont icon-tag"></i> {{ tag }}</a>
           </li>
         </ul>
         <span class="summary HeadLine">{{ post.excerpt }}</span>
       </li>
     </TransitionGroup>
     <span v-if="totalPage != 1" class="pagination">
-      <button :disabled="currPage === 1" :class="{ hide: currPage === 1 }" @click="currPage--">
-        <img class="up" src="../assets/icon/arrow.svg" alt="" />
+      <button :disabled="currPage === 1" :class="{ hide: currPage === 1 }" id="up" @click="currPage--">
+        <i class="iconfont icon-arrow"></i>
       </button>
       <span>{{ currPage }} / {{ totalPage }}</span>
-      <button
-        :disabled="currPage >= totalPage"
-        :class="{ hide: currPage >= totalPage }"
-        @click="currPage++"
-      >
-        <img class="next" src="../assets/icon/arrow.svg" alt="" />
+      <button :disabled="currPage >= totalPage" :class="{ hide: currPage >= totalPage }" id="next" @click="currPage++">
+        <i class="iconfont icon-arrow"></i>
       </button>
     </span>
   </div>
 </template>
 <script setup lang="ts">
-import { type PostData } from '../utils/posts.data'
 import { useData } from 'vitepress'
 import { ref, computed } from 'vue'
+import { data as posts } from '../utils/posts.data'
+import { useStore } from '../store'
+const { state } = useStore()
+const { page } = useData()
 const base = useData().site.value.base
-const { posts, click = null } = defineProps<{
-  posts: PostData[]
-  click?: (tag: string) => void
-}>()
 
 function formatDate(timestamp: number): string {
   const date = new Date(timestamp)
@@ -57,10 +43,22 @@ function formatDate(timestamp: number): string {
 const currPage = ref(1)
 const pageSize = ref(5)
 const postsList = computed(() => {
-  return posts.slice((currPage.value - 1) * pageSize.value, currPage.value * pageSize.value)
+  return finalPosts.value.slice((currPage.value - 1) * pageSize.value, currPage.value * pageSize.value)
 })
 const totalPage = computed(() => {
-  return Math.ceil(posts.length / pageSize.value) || 1
+  return Math.ceil(finalPosts.value.length / pageSize.value) || 1
+})
+
+// 文章传值
+const finalPosts = computed(() => {
+  if (page.value.filePath === 'index.md') {
+    currPage.value = 1
+    return posts
+  } else if (page.value.filePath === 'tags/index.md') {
+    currPage.value = 1
+    return state.selectedPosts
+  }
+  return []
 })
 </script>
 <style scoped lang="less">
@@ -109,7 +107,7 @@ const totalPage = computed(() => {
     transition: all 0.5s;
     background: linear-gradient(0.5turn, transparent, rgb(255, 255, 255) 70%),
       var(--triangle-background);
-    backdrop-filter: var(--blur-val);
+    // backdrop-filter: var(--blur-val);
     box-shadow: var(--blue-shadow);
   }
 
@@ -166,18 +164,6 @@ const totalPage = computed(() => {
         border-radius: 5px;
         transition: all 0.5s;
 
-        &::before {
-          display: inline-block;
-          content: '';
-          margin-right: 5px;
-          width: 5px;
-          height: 5px;
-          background-color: var(--font-color-gold);
-          border-radius: 50%;
-          vertical-align: middle;
-          transition: all 0.5s;
-        }
-
         &:hover {
           background-color: var(--btn-hover);
           color: var(--font-color-gold);
@@ -203,20 +189,21 @@ const totalPage = computed(() => {
     border-style: none;
   }
 
-  img {
-    height: 32px;
-    padding: 0;
-  }
-
   .hide {
     opacity: 0;
   }
 
-  .up {
+
+  .icon-arrow {
+    font-size: 36px;
+    color: var(--icon-color);
+  }
+
+  #up {
     animation: arrowUp 1s ease-in-out infinite alternate;
   }
 
-  .next {
+  #next {
     animation: arrowNext 1s ease-in-out infinite alternate;
   }
 }

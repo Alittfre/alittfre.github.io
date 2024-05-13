@@ -1,21 +1,21 @@
 <template>
   <ul class="tags">
     <li :class="['item', { active: active === tag }]" v-for="(_, tag) in tagData">
-      <a href="#" @click="setTag(tag)">{{ tag }}</a>
+      <a href="#" @click="setTag(tag)"><i class="iconfont icon-tag"></i> {{ tag }}</a>
     </li>
   </ul>
 </template>
 <script setup lang="ts">
 import { data as posts, type PostData } from '../utils/posts.data'
-import { ref, onMounted } from 'vue'
+import { ref, watch, onUnmounted } from 'vue'
 import { useStore } from '../store'
 
 const active = ref<string | null>(null)
 const tagData: Record<string, PostData[]> = {}
 const { state } = useStore()
+
 const setTag = (tag: string) => {
   active.value = tag
-  history.replaceState(null, document.title, '?q=' + tag)
   state.selectedPosts = tagData[tag] || []
   state.currTag = tag
 }
@@ -28,10 +28,14 @@ for (const post of posts) {
   }
 }
 
-onMounted(() => {
-  state.selectedPosts = []
-  active.value = new URLSearchParams(location.search).get('q')
-  setTag(active.value || '')
+setTag(state.currTag)
+
+watch(() => state.currTag, () => {
+  setTag(state.currTag)
+})
+
+onUnmounted(() => {
+  setTag('')
 })
 </script>
 <style scoped lang="less">
@@ -69,18 +73,6 @@ onMounted(() => {
       background-color: var(--btn-background);
       border-radius: 5px;
       transition: all 0.5s;
-
-      &::before {
-        display: inline-block;
-        content: '';
-        margin-right: 5px;
-        width: 5px;
-        height: 5px;
-        background-color: var(--font-color-gold);
-        border-radius: 50%;
-        vertical-align: middle;
-        transition: all 0.5s;
-      }
 
       &:hover {
         background-color: var(--btn-hover);
