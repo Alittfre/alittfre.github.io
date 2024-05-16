@@ -10,7 +10,7 @@ Thanks for inventing JavaScript😄
 
 最近又刷到了这张有关 JS 的 meme，正好这次就来详细看看。
 
-![meme](../public/js-meme_1.png)
+![meme](/js-meme_1.png)
 
 ---
 

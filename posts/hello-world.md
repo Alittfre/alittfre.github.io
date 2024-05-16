@@ -1,7 +1,7 @@
 ---
 title: HelloWorld
-date: 2024-4-16
-tags: [HelloWorld]
+date: 2024-04-16
+tags: [HelloWorld, Vue, VitePress]
 ---
 
 第一篇博客文章
