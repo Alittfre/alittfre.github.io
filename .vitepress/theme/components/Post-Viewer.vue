@@ -1,5 +1,5 @@
 <template>
-  <div class="viewBox container">
+  <div class="view-box container">
     <content class="content" />
     <Gitalk v-if="themeConfig.clientID"></Gitalk>
   </div>
@@ -13,10 +13,15 @@ const route = useRoute()
 const data = useData()
 const base = data.site.value.base
 const { state } = useStore()
-import { onUnmounted, onMounted } from 'vue'
-onMounted(() => {
-  const currPost = posts.findIndex((p) => p.href === route.path.replace(base, ''))
+import { onMounted, onUnmounted, watch } from 'vue'
+
+function getCurrpost() {
+  let currPost = posts.findIndex((p) => p.href === route.path.replace(base, ''))
   state.currPost = posts[currPost]
+}
+
+onMounted(() => {
+  getCurrpost()
 })
 
 onUnmounted(() => {
@@ -34,17 +39,21 @@ onUnmounted(() => {
   }
 })
 
+watch(() => route.path, () => {
+  getCurrpost()
+})
+
 const themeConfig = useData().theme.value
 </script>
 <style lang="less">
-.viewBox {
+.view-box {
   box-sizing: border-box;
   position: relative;
-  padding: 50px;
+  padding: 36px;
   border-radius: 32px;
   border: solid 2px white;
-  transition: all 0.5s;
-  background: linear-gradient(0.5turn, transparent, white 100px), var(--triangle-background);
+  // background: linear-gradient(0.5turn, transparent, white 100px), var(--triangle-background);
+  background: white;
   box-shadow: var(--blue-shadow);
 }
 
@@ -313,7 +322,7 @@ div[class*='language-'] {
     border-bottom: 3px solid rgb(213, 217, 219);
     box-sizing: border-box;
     background-color: rgb(239, 242, 244);
-    background-image: url('../assets/Popup_Deco.png');
+    background-image: var(--deco2);
     background-repeat: no-repeat;
     background-position: left;
     background-size: contain;
@@ -433,15 +442,19 @@ div[class*='language-'] {
   font-weight: bold;
 }
 
+/**
+ * others
+ * -------------------------------------------------------------------------- */
 
-
-img {
+img,
+svg {
   max-width: 100%;
 }
 
 @media (max-width: 768px) {
-  .viewBox {
+  .view-box {
     padding: 16px;
+    margin: 0 8px !important;
   }
 }
 </style>
