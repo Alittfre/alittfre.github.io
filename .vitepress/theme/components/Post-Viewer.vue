@@ -52,13 +52,11 @@ const themeConfig = useData().theme.value
   padding: 36px;
   border-radius: 32px;
   border: solid 2px white;
-  // background: linear-gradient(0.5turn, transparent, white 100px), var(--triangle-background);
   background: white;
   box-shadow: var(--blue-shadow);
 }
 
 .content {
-  color: var(--font-color-grey);
 
   /**
  * Paragraph and inline elements
@@ -77,14 +75,11 @@ const themeConfig = useData().theme.value
     margin: 16px 0;
     border-left: 2px solid #5cd3ff;
     padding-left: 16px;
-    transition: border-color 0.5s;
   }
 
   blockquote>p {
     margin: 0;
     font-size: 16px;
-    color: var(--vp-c-text-2);
-    transition: color 0.5s;
   }
 
   a {
