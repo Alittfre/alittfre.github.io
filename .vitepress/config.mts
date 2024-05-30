@@ -51,8 +51,8 @@ export default defineConfigWithTheme<ThemeConfig>({
     //footer配置
     footerName: 'Alittfre',
     poweredList: [
-      { name: 'GitHub Pages', url: 'https://docs.github.com/zh/pages' },
-      { name: 'Cloudflare', url: 'https://www.cloudflare.com/zh-cn/' },
+      { name: 'GitHub Pages', url: 'https://docs.github.com/pages' },
+      { name: 'Cloudflare', url: 'https://www.cloudflare.com/' },
     ],
 
     //gitalk配置
