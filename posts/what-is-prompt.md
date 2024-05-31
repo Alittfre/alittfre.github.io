@@ -3,12 +3,12 @@ title: AIGC时代，你还不知道Prompt？
 date: 2024-05-29
 tags: [Prompt, AI, ChatGPT, Stable Diffusion]
 head:
-- - meta
-- name: description
-content: 简单介绍 Prompt，并从应用角度阐述 Prompt 对 AI 生成结果的影响
-- - meta
-- name: keywords
-content: Prompt AI ChatGPT StableDiffusion
+  - - meta
+    - name: description
+      content: 简单介绍 Prompt，并从应用角度阐述 Prompt 对 AI 生成结果的影响
+  - - meta
+    - name: keywords
+      content: Prompt AI ChatGPT StableDiffusion
 ---
 
 简单介绍 Prompt，并从应用角度阐述 Prompt 对 AI 生成结果的影响
