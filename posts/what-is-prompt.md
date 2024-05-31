@@ -8,7 +8,7 @@ head:
 content: 简单介绍 Prompt，并从应用角度阐述 Prompt 对 AI 生成结果的影响
 - - meta
 - name: keywords
-content: Prompt AI ChatGPT Stable Diffusion
+content: Prompt AI ChatGPT StableDiffusion
 ---
 
 简单介绍 Prompt，并从应用角度阐述 Prompt 对 AI 生成结果的影响
