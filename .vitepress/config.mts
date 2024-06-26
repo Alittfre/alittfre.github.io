@@ -30,6 +30,9 @@ export default defineConfigWithTheme<ThemeConfig>({
     ['script', { src: 'https://unpkg.com/gitalk/dist/gitalk.min.js' }],
   ],
   ignoreDeadLinks: true,
+  sitemap: {
+    hostname: 'https://lin66.site',
+  },
   title: "Alittfre's 部落格",
   description: "Alittfre's 部落格",
   themeConfig: {
