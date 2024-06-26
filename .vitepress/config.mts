@@ -31,7 +31,7 @@ export default defineConfigWithTheme<ThemeConfig>({
   ],
   ignoreDeadLinks: true,
   sitemap: {
-    hostname: 'https://lin66.site',
+    hostname: 'https://lin66.site/',
   },
   title: "Alittfre's 部落格",
   description: "Alittfre's 部落格",
