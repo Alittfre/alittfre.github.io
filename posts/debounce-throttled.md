@@ -2,6 +2,13 @@
 title: 防抖 VS 节流
 date: 2024-05-20
 tags: [防抖, 节流, 性能优化]
+head:
+  - - meta
+    - name: description
+      content: 简述防抖与节流的区别，附带部分示例
+  - - meta
+    - name: keywords
+      content: 防抖 节流 前端 性能优化
 ---
 
 简述防抖与节流的区别，附带部分示例

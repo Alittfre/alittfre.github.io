@@ -2,6 +2,13 @@
 title: new Vue()之后发生了什么？
 date: 2024-05-15
 tags: [Vue]
+head:
+  - - meta
+    - name: description
+      content: new Vue()之后发生了什么
+  - - meta
+    - name: keywords
+      content: Vue 前端
 ---
 
 通过阅读源码了解 new Vue()后发生的事情

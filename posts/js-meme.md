@@ -2,6 +2,13 @@
 title: 一张JS梗图的分析
 date: 2024-5-13
 tags: [JavaScript, meme]
+head:
+  - - meta
+    - name: description
+      content: Thanks for inventing JavaScript😄
+  - - meta
+    - name: keywords
+      content: JS JavaScript meme
 ---
 
 Thanks for inventing JavaScript😄
