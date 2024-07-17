@@ -28,6 +28,14 @@ export default defineConfigWithTheme<ThemeConfig>({
     // gitalk
     ['link', { rel: 'stylesheet', href: 'https://unpkg.com/gitalk/dist/gitalk.css' }],
     ['script', { src: 'https://unpkg.com/gitalk/dist/gitalk.min.js' }],
+    // lxwk font
+    [
+      'link',
+      {
+        rel: 'stylesheet',
+        href: 'https://cdn.jsdelivr.net/npm/cn-fontsource-lxgw-wen-kai-gb-screen/font.css',
+      },
+    ],
   ],
   ignoreDeadLinks: true,
   sitemap: {

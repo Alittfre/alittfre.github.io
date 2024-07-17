@@ -1,13 +1,21 @@
 <template>
-  <div class="welcome-box" ref="welcomeBoxRef" @mousemove="parallax" @mouseleave="reset"
-    :style="{ transform: `rotateY(${calcY}deg) rotateX(${calcX}deg)` }">
+  <div
+    class="welcome-box"
+    ref="welcomeBoxRef"
+    @mousemove="parallax"
+    @mouseleave="reset"
+    :style="{ transform: `rotateY(${calcY}deg) rotateX(${calcX}deg)` }"
+  >
     <span class="welcome-text">{{ welcomeText }}</span>
-    <div class="info-box" :style="{
-      background: `linear-gradient(${angle}deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5))`,
-    }">
+    <div
+      class="info-box"
+      :style="{
+        background: `linear-gradient(${angle}deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5))`,
+      }"
+    >
       <img src="../assets/banner/avatar.jpg" alt="" class="avatar" />
       <span class="name">{{ name }}</span>
-      <span>{{ motto }}</span>
+      <span class="motto">{{ mottoText }}<span class="pointer"></span></span>
       <ul>
         <li v-for="item in social">
           <a :href="item.url"><i :class="`iconfont icon-${item.icon} social`"></i></a>
@@ -55,6 +63,17 @@ function getMouseAngle(x, y) {
 const reset = () => {
   calcX.value = calcY.value = angle.value = 0
 }
+
+let index = 0
+let mottoText = ref('')
+function addNextCharacter() {
+  if (index < motto.length) {
+    mottoText.value += motto[index]
+    index++
+    setTimeout(addNextCharacter, Math.random() * 150 + 30)
+  }
+}
+addNextCharacter()
 </script>
 <style scoped lang="less">
 .welcome-box {
@@ -110,9 +129,35 @@ const reset = () => {
     font-weight: normal;
   }
 
+  .motto {
+    font-weight: bold;
+    animation: colorChange 0.8s linear infinite;
+    padding-right: 4px;
+    .pointer {
+      display: inline-block;
+      margin: 0 0 0 3px;
+      padding: 0;
+      vertical-align: middle;
+      width: 2px;
+      height: 14px;
+      animation: colorChange 0.8s linear infinite;
+      background-color: var(--pointerColor);
+    }
+    @keyframes colorChange {
+      0%,
+      40% {
+        --pointerColor: var(--font-color-grey);
+      }
+
+      60%,
+      100% {
+        --pointerColor: transparent;
+      }
+    }
+  }
+
   span {
     margin-top: 10px;
-    font-weight: bold;
     text-align: center;
     margin-right: 16px;
     margin-left: 16px;
