@@ -1,6 +1,6 @@
 ---
 title: Blender小技巧之我不要HDR背景
-date: 2024-05-29
+date: 2024-08-09
 tags: [Blender, HDR, 渲染]
 head:
   - - meta
