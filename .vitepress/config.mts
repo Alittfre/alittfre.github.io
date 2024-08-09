@@ -53,7 +53,7 @@ export default defineConfigWithTheme<ThemeConfig>({
     //banner区配置
     name: "Alittfre's 部落格",
     welcomeText: 'Hello, VitePress',
-    motto: "You Forget A Thousand Things Every Day Pal. Make Sure This Is One Of 'Em.",
+    motto: '邦邦卡邦 瓦尼瓦尼',
     social: [
       { icon: 'github', url: 'https://github.com/Alittfre' },
       { icon: 'bilibili', url: 'https://space.bilibili.com/7663236' },
