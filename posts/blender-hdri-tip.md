@@ -15,7 +15,11 @@ head:
 
 ---
 
-## 直接上节点图，参考自：https://www.bilibili.com/video/BV1jh411b7Qj
+## 直接上节点图
+
+::: info
+参考自：https://www.bilibili.com/video/BV1jh411b7Qj
+:::
 
 > ![blender hdri](/blender-hdri-tip_1.png)
 
