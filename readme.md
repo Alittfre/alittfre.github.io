@@ -30,20 +30,22 @@ BA 主题博客，基于 VitePress，绝赞画饼中
 - [ ] 为 Arona 添加更多交互
 - [ ] 让点击烟花更还原游戏效果
 - [ ] 首屏加载动画
+- [ ] 骨架屏
 - [ ] more...
 
 ## 主题配置
 
-首页头图和头像在`.vitepress/theme/assets/banner`
+**音乐** **首页背景** **头像**在`.vitepress/theme/assets/banner`
 
-配置文件在`.vitepress/config.mts`
+**配置文件**在`.vitepress/config.mts`
 
 ```ts
 export interface ThemeConfig {
   //banner
+  videoBanner: false, // 首页背景类型，默认为图片，可选视频
   name: string // 首页名字
   welcomeText: string // 首页问候语
-  motto: string // 首页签名
+  motto: [string 1 , string2]// 首页签名,可填多个，随机显示
   social: { icon: string; url: string }[] // 社交平台，icon可选bilibili，github，tw，weibo, wechat, qq, netease_music
 
   //gitalk配置

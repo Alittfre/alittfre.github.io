@@ -4,9 +4,10 @@ export interface ThemeConfig {
   menuList: { name: string; url: string }[]
 
   //banner
+  videoBanner: boolean
   name: string
   welcomeText: string
-  motto: string
+  motto: string[]
   social: { icon: string; url: string }[]
 
   //footer
@@ -58,9 +59,10 @@ export default defineConfigWithTheme<ThemeConfig>({
     ],
 
     //banner区配置
+    videoBanner: false,
     name: "Alittfre's 部落格",
-    welcomeText: 'Hello, VitePress',
-    motto: '邦邦卡邦 瓦尼瓦尼',
+    welcomeText: 'HelloWorld',
+    motto: ['邦邦卡邦 瓦尼瓦尼', 'vanitas vanitatum et omnia vanitas'],
     social: [
       { icon: 'github', url: 'https://github.com/Alittfre' },
       { icon: 'bilibili', url: 'https://space.bilibili.com/7663236' },
