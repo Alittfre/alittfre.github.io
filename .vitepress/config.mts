@@ -1,4 +1,5 @@
 import { defineConfigWithTheme } from 'vitepress'
+import mdItCustomAttrs from 'markdown-it-custom-attrs'
 export interface ThemeConfig {
   //navBar
   menuList: { name: string; url: string }[]
@@ -44,6 +45,20 @@ export default defineConfigWithTheme<ThemeConfig>({
         href: '/font/Blueaka_Bold/Blueaka_Bold.css',
       },
     ],
+    // 图片灯箱
+    [
+      'link',
+      {
+        rel: 'stylesheet',
+        href: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css',
+      },
+    ],
+    [
+      'script',
+      {
+        src: 'https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js',
+      },
+    ],
   ],
   ignoreDeadLinks: true,
   sitemap: {
@@ -86,5 +101,11 @@ export default defineConfigWithTheme<ThemeConfig>({
     theme: 'github-light',
     lineNumbers: true,
     math: true,
+    config: (md) => {
+      // use more markdown-it plugins!
+      md.use(mdItCustomAttrs, 'image', {
+        'data-fancybox': 'gallery',
+      })
+    },
   },
 })
