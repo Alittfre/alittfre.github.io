@@ -30,9 +30,12 @@ for (const post of posts) {
 
 setTag(state.currTag)
 
-watch(() => state.currTag, () => {
-  setTag(state.currTag)
-})
+watch(
+  () => state.currTag,
+  () => {
+    setTag(state.currTag)
+  },
+)
 
 onUnmounted(() => {
   setTag('')
@@ -52,12 +55,11 @@ onUnmounted(() => {
   padding: 16px;
   background-color: rgba(255, 255, 255, 0.25);
   border-radius: 32px;
-  border: solid 2px white;
+  border: solid 2px var(--foreground-color);
   backdrop-filter: var(--blur-val);
   margin: 50px 8px 0 8px;
   width: 768px;
   z-index: 100;
-  transition: all 0.5s;
 
   li {
     margin: 8px;
@@ -68,7 +70,7 @@ onUnmounted(() => {
       color: var(--font-color-gold);
       background-color: var(--btn-background);
       border-radius: 5px;
-      transition: all 0.5s;
+      transition: background-color 0.5s;
 
       &:hover {
         background-color: var(--btn-hover);

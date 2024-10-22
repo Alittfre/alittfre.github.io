@@ -5,7 +5,9 @@
         <header class="post-header">
           <div class="title">
             <div class="title-dot"></div>
-            <h1 class="name"><a :href="base + post.href">{{ post.title }}</a></h1>
+            <h1 class="name">
+              <a :href="base + post.href">{{ post.title }}</a>
+            </h1>
           </div>
           <div class="meta-info-bar">
             <div class="time-info">
@@ -15,7 +17,9 @@
           </div>
           <ul class="tags">
             <li v-for="tag in post.tags">
-              <a :href="`${base}tags/`" @click="state.currTag = tag"><i class="iconfont icon-tag"></i> {{ tag }}</a>
+              <a :href="`${base}tags/`" @click="state.currTag = tag"
+                ><i class="iconfont icon-tag"></i> {{ tag }}</a
+              >
             </li>
           </ul>
         </header>
@@ -25,11 +29,21 @@
       </article>
     </TransitionGroup>
     <span v-if="totalPage != 1" class="pagination">
-      <button :disabled="currPage === 1" :class="{ hide: currPage === 1 }" id="up" @click="currPage--">
+      <button
+        :disabled="currPage === 1"
+        :class="{ hide: currPage === 1 }"
+        id="up"
+        @click="currPage--"
+      >
         <i class="iconfont icon-arrow"></i>
       </button>
       <span>{{ currPage }} / {{ totalPage }}</span>
-      <button :disabled="currPage >= totalPage" :class="{ hide: currPage >= totalPage }" id="next" @click="currPage++">
+      <button
+        :disabled="currPage >= totalPage"
+        :class="{ hide: currPage >= totalPage }"
+        id="next"
+        @click="currPage++"
+      >
         <i class="iconfont icon-arrow"></i>
       </button>
     </span>
@@ -55,7 +69,10 @@ function formatDate(timestamp: number): string {
 const currPage = ref(1)
 const pageSize = ref(5)
 const postsList = computed(() => {
-  return finalPosts.value.slice((currPage.value - 1) * pageSize.value, currPage.value * pageSize.value)
+  return finalPosts.value.slice(
+    (currPage.value - 1) * pageSize.value,
+    currPage.value * pageSize.value,
+  )
 })
 const totalPage = computed(() => {
   return Math.ceil(finalPosts.value.length / pageSize.value) || 1
@@ -92,16 +109,13 @@ const finalPosts = computed(() => {
 }
 
 .posts-content {
-
   article,
   h1,
   ul {
     margin: 0;
     padding: 0;
   }
-
 }
-
 
 .posts-list {
   position: relative;
@@ -112,17 +126,15 @@ const finalPosts = computed(() => {
     flex-direction: column;
     margin: 0 0 50px 0;
     padding-bottom: 16px;
-    background-color: white;
+    background-color: var(--foreground-color);
     border-radius: 32px;
     border-left: solid 16px #c7e4f6;
     background-image: var(--deco1);
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
-    box-shadow: var(--blue-shadow);
+    box-shadow: 0px 0px 8px rgb(var(--blue-shadow-color), 0.8);
   }
-
-
 }
 
 .post-header {
@@ -144,7 +156,7 @@ const finalPosts = computed(() => {
 
     a {
       color: var(--font-color-grey);
-      transition: text-shadow .5s;
+      transition: text-shadow 0.5s;
 
       &:hover {
         text-shadow: 0 0 3px var(--font-color-grey);
@@ -167,10 +179,7 @@ const finalPosts = computed(() => {
       margin: 0 16px;
     }
   }
-
 }
-
-
 
 .tags {
   display: flex;
@@ -224,7 +233,6 @@ const finalPosts = computed(() => {
     cursor: auto;
   }
 
-
   .icon-arrow {
     font-size: 36px;
     color: var(--icon-color);
@@ -260,12 +268,22 @@ const finalPosts = computed(() => {
 }
 
 @media (max-width: 768px) {
-
   .post {
     margin: 0 8px 30px 8px !important;
     background-size: cover !important;
-
   }
-
+  .post-header {
+    padding: 20px 35px 0;
+    .name {
+      font-size: 26px;
+    }
+    .title {
+      margin-bottom: 6px;
+      .title-dot {
+        height: 18px;
+        top: 6px;
+      }
+    }
+  }
 }
 </style>

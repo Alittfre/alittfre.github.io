@@ -4,10 +4,10 @@
     :class="{ postViewer: state.currPost.href, loadingComplete: !state.splashLoading }"
   >
     <slot></slot>
+
     <canvas id="wave"></canvas>
     <video autoplay muted loop class="bg-video" v-if="videoBanner">
       <source src="../assets/banner/banner_video.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
     </video>
     <div class="bg-img" v-else></div>
   </div>
@@ -163,6 +163,7 @@ onMounted(() => {
 </script>
 <style scoped lang="less">
 .banner {
+  transform: translateZ(0);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -174,10 +175,22 @@ onMounted(() => {
   mask: linear-gradient(to top, transparent, var(--general-background-color) 5%);
   perspective: 1000px;
   overflow: hidden;
-  -webkit-user-drag: none; /* 禁用拖动 */
+  -webkit-user-drag: none;
+  transition: height 0.3s;
+
   &.loadingComplete {
-    transition: filter 0.3s, transform 0.3s;
     animation: fade-blur-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+}
+
+@keyframes float-fade {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(10px);
   }
 }
 
@@ -186,8 +199,9 @@ onMounted(() => {
     filter: var(--blur-val);
     transform: scale(1.5);
   }
+
   to {
-    filter: blur(0);
+    filter: none;
     transform: scale(1);
   }
 }
@@ -212,7 +226,8 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  -webkit-user-drag: none; /* 禁用视频拖动 */
+  /* 禁用视频拖动 */
+  -webkit-user-drag: none;
 }
 
 #wave {

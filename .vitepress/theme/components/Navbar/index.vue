@@ -1,6 +1,6 @@
 <template>
-  <header :class="{ postViewer: state.currPost.href }">
-    <nav class="container">
+  <header :class="{ postViewer: state.currPost.href }" class="container">
+    <nav>
       <span class="logo">
         <img @dragstart.prevent src="../../assets/icon/navLogo.svg" alt="" />
       </span>
@@ -11,19 +11,19 @@
           </li>
         </ul>
       </span>
-      <span class="MenuMask"></span>
-      <label class="hamburger">
-        <input type="checkbox" :checked="state.showDropdownMenu" @change="toggleDropdownMenu" />
-        <svg viewBox="0 0 32 32">
-          <path class="line line-top-bottom"
-            d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22">
-          </path>
-          <path class="line" d="M7 16 27 16"></path>
-        </svg>
-      </label>
-      <DropdownMenu :showMenu="state.showDropdownMenu"></DropdownMenu>
+      <div
+        class="hamburger"
+        :class="{ active: state.showDropdownMenu }"
+        @click="toggleDropdownMenu"
+      >
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
     </nav>
+    <DropdownMenu :showMenu="state.showDropdownMenu"></DropdownMenu>
   </header>
+
   <SearchDialog v-if="state.searchDialog" @close-dialog="closeDialog"></SearchDialog>
 </template>
 
@@ -50,12 +50,12 @@ const toggleDropdownMenu = () => {
 
 <style scoped lang="less">
 .postViewer {
-  height: 50vh;
+  margin-bottom: 40vh;
 }
 
 header {
-  height: 80vh;
-
+  margin-bottom: 75vh;
+  position: relative;
   nav {
     display: flex;
     align-items: center;
@@ -67,12 +67,13 @@ header {
     box-sizing: border-box;
     padding: 0 16px;
     border-radius: 0 0 30px 30px;
-    border-bottom: solid 2px white;
-    border-left: solid 2px white;
-    border-right: solid 2px white;
-    background: linear-gradient(0.25turn, transparent, white 25%), var(--triangle-background);
+    border-bottom: solid 2px var(--foreground-color);
+    border-left: solid 2px var(--foreground-color);
+    border-right: solid 2px var(--foreground-color);
+    background: linear-gradient(0.25turn, transparent, var(--foreground-color) 25%),
+      var(--triangle-background);
     backdrop-filter: var(--blur-val);
-    box-shadow: var(--blue-shadow);
+    box-shadow: 0px 0px 8px rgb(var(--blue-shadow-color), 0.8);
   }
 
   .logo {
@@ -84,9 +85,8 @@ header {
   }
 
   .menu {
-    z-index: 200;
-
     ul {
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -94,9 +94,10 @@ header {
       margin: 0;
 
       li {
+        margin: 0 50px;
         a {
           display: block;
-          padding: 10px 16px 10px 16px;
+          padding: 10px 16px;
           border-radius: 8px;
           font-size: 20px;
           font-weight: 600;
@@ -114,70 +115,58 @@ header {
     }
   }
 
-  // 菜单遮罩
-  .MenuMask {
-    position: fixed;
-    top: 0;
-    left: 1;
-    right: -1.8px;
-    width: 170px;
-    bottom: -1.5px;
-    background-color: white;
-    border-radius: 0 0 30px 30px;
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 36px;
+    cursor: pointer;
   }
 
+  .hamburger .line {
+    display: block;
+    width: 80%;
+    height: 4px;
+    border-radius: 4px;
+    background-color: var(--font-color-grey);
+    margin-bottom: 4px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
 
-  .hamburger {
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-
-    &:hover {
-      transform: translateY(-2px);
-    }
-
-    input {
-      display: none;
-    }
-
-    svg {
-      height: 3em;
-      transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .line {
-      fill: none;
-      stroke: rgb(76, 88, 102);
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-width: 3;
-      transition: stroke-dasharray 500ms cubic-bezier(0.4, 0, 0.2, 1),
-        stroke-dashoffset 500ms cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .line-top-bottom {
-      stroke-dasharray: 12 63;
-    }
-
-    input:checked+svg {
-      transform: rotate(-45deg);
-    }
-
-    input:checked+svg .line-top-bottom {
-      stroke-dasharray: 20 300;
-      stroke-dashoffset: -32.42;
-    }
+  .hamburger.active .line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger.active .line:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active .line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
   }
 }
 
-@media (min-width: 768px) {
-  .menu {
-    li {
-      margin: 0 50px;
-
-      a {
-        font-size: 18px;
+@media (max-width: 768px) {
+  header {
+    nav {
+      height: 64px;
+    }
+    .logo {
+      img {
+        height: 32px;
       }
+    }
+    .menu {
+      ul {
+        li {
+          margin: 0 10px;
+          a {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+    .hamburger {
+      width: 32px;
     }
   }
 }
