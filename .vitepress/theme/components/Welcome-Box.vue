@@ -18,6 +18,7 @@
         <span class="name">{{ name }}</span>
         <span class="motto">
           {{ mottoText }}
+          <span class="pointer"></span>
         </span>
         <ul>
           <li v-for="item in social" :key="item.url">
@@ -188,7 +189,8 @@ onMounted(() => {
     padding: 0;
 
     .social {
-      font-size: 32px;
+      font-size: 25px;
+      font-weight: 600;
       transition: all 0.5s;
       color: var(--font-color-grey);
 
@@ -227,7 +229,7 @@ onMounted(() => {
     ul {
       width: 180px;
       .social {
-        font-size: 24px;
+        font-size: 19px;
       }
     }
   }
