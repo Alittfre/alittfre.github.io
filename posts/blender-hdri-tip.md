@@ -21,7 +21,7 @@ head:
 参考自：https://www.bilibili.com/video/BV1jh411b7Qj
 :::
 
-> ![blender hdri](/blender-hdri-tip_1.png)
+> ![blender hdri](/post_pic/blender-hdri-tip_1.png)
 
 这里其他节点都好理解，但是光程是什么东西？我们从物理上和 Blender 光程节点两方面入手了解。
 
