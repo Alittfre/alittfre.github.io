@@ -12,7 +12,7 @@ head:
       content: Android Linux chroot AutoBangumi qBittorrent jellyfin
 ---
 
-Android 基于 Liunx 🤔
+Android 基于 Linux 🤔
 Android 手机 = 服务器 ☝️🤓
 
 ---
