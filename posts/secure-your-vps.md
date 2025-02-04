@@ -26,7 +26,7 @@ This article was originally published by [Kyri](https://substack.com/@kkyri), Or
 
 你刚刚入手了一台 $5 的 VPS。现在你手头只有 VPS 的 IP 地址、用户名和密码，下一步应该做什么？
 本文将手把手教你从零开始强化 VPS 的安全性，涵盖基础的防护措施和进阶安全策略。从用户权限管理、SSH 安全配置、防火墙规则设置，到部署自动化工具以确保服务器始终处于防护状态，我们将逐一演示关键步骤。
-注：本文以 Ubuntu 系统为例，适用于经济型 VPS 服务商（此类服务商通常不提供预先配置的安全设置）。如果你在使用 AWS、Azure 等主流云平台，部分操作可能已经预先配置，可直接跳过相关配置。
+**注：**本文以 Ubuntu 系统为例，适用于经济型 VPS 服务商（此类服务商通常不提供预先配置的安全设置）。如果你在使用 AWS、Azure 等主流云平台，部分操作可能已经预先配置，可直接跳过相关配置。
 
 # 安全访问配置
 
@@ -38,10 +38,11 @@ This article was originally published by [Kyri](https://substack.com/@kkyri), Or
 ssh root@12.34.56.78
 ```
 
-> 将 root 和 12.34.56.78 替换为你的实际用户名与 IP 地址
+> 将 _user_ 和 _ip 地址_ 替换为你的实际用户名与 IP 地址
 
 然后根据提示输入密码完成认证。
-成功登录后，立即将系统更新至最新版本：
+
+成功登录后，立即将系统软件更新至最新版本：
 
 ```bash
 sudo apt update
@@ -58,9 +59,10 @@ sudo apt upgrade -y
 sudo adduser username
 ```
 
-> 'username'为你新创建的用户名
+> _‘username’_ 为你新创建的用户名
 
 终端将会提示你设置并确认新用户的密码，并可能要求你提供其他附加信息，如果你暂时不想设置这些附加信息，直接回车跳过即可。
+
 接下来，赋予新用户 sudo 权限。
 
 ```bash
@@ -74,7 +76,7 @@ su - username
 sudo whoami
 ```
 
-如果终端返回`root`，则代表成功为新用户配置了 sudo 权限。
+如果终端返回 _root_，则代表成功为新用户配置了 sudo 权限。
 
 ### 配置 SSH 认证
 
@@ -86,7 +88,7 @@ sudo whoami
 ssh-keygen -t ed25519 -C "email@example.com"
 ```
 
-> 将"email@example.com"替换为你自己的邮箱地址
+> 将 _“email@example.com”_ 替换为你自己的邮箱地址
 
 按下回车将密钥存放到默认位置。另外，你可以选择输入一个口令，这样做的话每次连接 VPS 都需要输入口令。我个人为了方便将其留空。
 
@@ -96,11 +98,11 @@ ssh-keygen -t ed25519 -C "email@example.com"
 ssh-copy-id -i ~/.ssh/ed25519.pub username@12.34.56.78
 ```
 
-> 将`username`和`12.34.56.78`替换为你实际的信息
+> _username_ 就是之前新创建的用户
 
 按照提示输入密码。
 
-验证密钥对连接并：
+检查密钥对连接是否成功：
 
 ```bash
 ssh -i ~/.ssh/ed25519 -o PasswordAuthentication=no username@12.34.56.78
@@ -160,21 +162,20 @@ sudo vim /etc/ssh/sshd_config
 
 你的`sshd_config`应该包含以下几行：
 
-> PermitRootLogin no
->
-> ChallengeResponseAuthentication no
->
-> PasswordAuthentication no
->
-> UsePAM no
+```
+PermitRootLogin no
+ChallengeResponseAuthentication no
+PasswordAuthentication no
+UsePAM no
+```
 
 之后保存并退出。
 
 ::: warning
-注意：在进行以上操作前，确保你创建了非 root 用户并按照之前的章节配置了 SSH 密钥连接，不然你可能会被你自己的 VPS 拒之门外。
+在进行以上操作前，确保你创建了非 root 用户并按照之前的章节配置了 SSH 密钥连接，不然你可能会被你自己的 VPS 拒之门外。
 :::
 
-重启 SSH 进程以应用修改：
+重载 SSH 进程以应用修改：
 
 ```bash
 sudo service sshd reload
@@ -186,7 +187,7 @@ sudo service sshd reload
 ssh root@12.34.56.78
 ```
 
-root 登录将失败并提示 `Permission denied`
+root 登录将失败并提示 _Permission denied_。
 
 # VPS 安全加固
 
@@ -206,7 +207,7 @@ sudo apt install ufw
 sudo ufw status verbose
 ```
 
-此时应该为未活动状态，如果不是，暂时禁用 UFW：
+**此时应该为未活动状态，如果不是，暂时禁用 UFW：**
 
 ```bash
 sudo ufw disable
@@ -234,7 +235,7 @@ sudo ufw show added
 
 你应该能看到以下内容：
 
-```bash
+```
 ufw allow OpenSSH
 ```
 
@@ -261,7 +262,7 @@ sudo ufw enable
 ```
 
 ::: warning
-注意：系统可能警告 SSH 连接会受到影响。如果你确定 OpenSSH 已被防火墙放行（如前文强调），那么可以放心继续操作，输入 y 跳过警告。
+系统可能警告 SSH 连接会受到影响。如果你确定 OpenSSH 已被防火墙放行（如前文强调），那么可以放心继续操作，输入 y 跳过警告。
 :::
 
 查看防火墙运行状态：
@@ -357,9 +358,9 @@ sudo systemctl start fail2ban
 sudo systemctl status fail2ban
 ```
 
-（可选）为了检查 Fail2Ban 是否正常工作，你可以尝试使用错误的 SSH 密钥多次连接 VPS。当 IP 被禁止连接时，错误提示应该由 `Permission denied` 变为 `Connection refused`。
+（可选）为了检查 Fail2Ban 是否正常工作，你可以尝试使用错误的 SSH 密钥多次连接 VPS。当 IP 被禁止连接时，错误提示应该由 _Permission denied_ 变为 _Connection refused_。
 ::: warning
-执行以上测试时请改变 IP 以免你目前的 IP 被禁止连接 VPS。如果被禁止连接，默认的禁止时间是 10 分钟。
+执行以上测试时请改变 IP 以免你目前的 IP 被禁止连接。如果被禁止连接，默认的禁止时间是 10 分钟。
 :::
 
 你的 VPS 现在有额外的防护来防御暴力攻击。
@@ -388,7 +389,7 @@ sudo systemctl status unattended-upgrades.service
 sudo vim /etc/apt/apt.conf.d/50unattended-upgrades
 ```
 
-找到包含 `Unattended-Upgrade::Automatic-Reboot` 的行并设置为 true。
+找到包含 `Unattended-Upgrade::Automatic-Reboot` 的行并设置为 `true`。
 
 ::: warning
 开启自动重启会让你的 VPS 服务在重启时暂时不可用。个人建议将其关闭，只在需要时手动重启。当你使用 SSH 登录 VPS 时，你会看到自动重启的信息。
@@ -396,8 +397,8 @@ sudo vim /etc/apt/apt.conf.d/50unattended-upgrades
 
 如果你修改完了配置项，重载服务：
 
-```
-
+```bash
+sudo systemctl reload unattended-upgrades.service
 ```
 
 你的 VPS 现在将会时刻处于最新安全补丁和必要升级的状态下。
