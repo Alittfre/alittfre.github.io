@@ -412,7 +412,9 @@ sh run_AB.sh
 
 <img src="/post_pic/android-autobangumi-qbit-setting3.png" alt="qbit-setting3" data-fancybox="gallery" width="600" />
 
-```Tracker列表
+Tracker 列表
+
+```
 http://tracker.gbitt.info/announce
 https://tracker.lilithraws.cf/announce
 https://tracker1.520.jp/announce
