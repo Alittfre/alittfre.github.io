@@ -10,6 +10,7 @@ interface StoreState {
   fireworksEnabled: boolean
   SpinePlayerEnabled: boolean
   showDropdownMenu: boolean
+  darkMode: 'light' | 'dark' | 'system'
 }
 
 const state: StoreState = reactive({
@@ -26,12 +27,14 @@ const state: StoreState = reactive({
     wordCount: 0,
     cover: '',
     excerpt: '',
+    pinned: false
   },
   searchDialog: false,
   splashLoading: true,
   fireworksEnabled: true,
   SpinePlayerEnabled: true,
   showDropdownMenu: false,
+  darkMode: 'system',
 })
 
 export function useStore() {

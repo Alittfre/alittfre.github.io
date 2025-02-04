@@ -2,6 +2,7 @@
   <div class="container posts-content">
     <TransitionGroup class="posts-list" name="list" tag="div">
       <article class="post" v-for="post in postsList" :key="post.href">
+        <span v-if="post.pinned" class="pinned"></span>
         <header class="post-header">
           <div class="title">
             <div class="title-dot"></div>
@@ -10,6 +11,7 @@
             </h1>
           </div>
           <div class="meta-info-bar">
+            <span class="iconfont icon-time time"></span>
             <div class="time-info">
               <time datetime="">{{ formatDate(post.create) }}</time>
             </div>
@@ -124,39 +126,58 @@ const finalPosts = computed(() => {
   .post {
     display: flex;
     flex-direction: column;
-    margin-bottom: 5vh;
+    margin: 0 0 50px 0;
+    padding-bottom: 16px;
     background-color: var(--foreground-color);
-    border-radius: 2vw;
-    border-left: solid 1vw #c7e4f6;
+    border-radius: 32px;
+    border-left: solid 16px var(--pot-border-left);
     background-image: var(--deco1);
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
     box-shadow: 0px 0px 8px rgb(var(--blue-shadow-color), 0.8);
+    transition: all 0.5s;
+    .pinned {
+      position: absolute;
+      width: 42px;
+      height: 42px;
+      top: -8px;
+      right: -8px;
+      border-radius: 50px;
+      background: var(--icon-pinned) no-repeat;
+      background-size: contain;
+      box-shadow: 0 0 6px rgba(var(--blue-shadow-color), 0.65);
+    }
   }
 }
 
 .post-header {
-  padding: 3vh 2.5vw 0;
+  padding: 32px 40px 0;
 
   .title {
     position: relative;
-    margin-bottom: 0.8vh;
-    font-size: 1vw;
+    margin-bottom: 8px;
 
     .title-dot {
       width: 4px;
-      height: 1.5vw;
+      height: 20px;
       position: absolute;
-      left: -1vw;
-      top: 1vh;
-      background: #c7e4f6;
+      left: -16px;
+      top: 9.5px;
+      background: var(--pot-border-left);
       border-radius: 2px;
+      transition: background 0.5s;
+    }
+
+    .name {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
 
     a {
       color: var(--font-color-grey);
-      transition: text-shadow 0.5s;
+      transition: text-shadow 0.5s, color 0.5s;
 
       &:hover {
         text-shadow: 0 0 3px var(--font-color-grey);
@@ -166,18 +187,25 @@ const finalPosts = computed(() => {
 
   .meta-info-bar {
     display: flex;
-    margin-bottom: 0.4vh;
-    font-size: 0.9vw;
+    margin-bottom: 7px;
+    opacity: 0.75;
+
+    .time {
+      font-size: 13px;
+      color: var(--font-color-grey);
+      margin: 3px 2px 0 0;
+      font-weight: bold;
+    }
 
     .seperator::before {
       content: '';
       display: inline-block;
       border-radius: 50%;
-      height: 0.3vw;
-      width: 0.3vw;
+      height: 4px;
+      width: 4px;
       vertical-align: middle;
       background-color: var(--font-color-grey);
-      margin: 0 0.8vw;
+      margin: 0 16px;
     }
   }
 }
@@ -187,25 +215,23 @@ const finalPosts = computed(() => {
   align-items: center;
   flex-wrap: wrap;
   padding: 0;
+  margin-bottom: 6px;
 
   li {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 0.8vh;
-    margin-right: 1vw;
+    padding-top: 6px;
+    margin-right: 16px;
 
     a {
-      font-size: 1vw;
       color: var(--font-color-grey);
-      padding: 0.4vh 0.3vw;
+      padding: 3px 5px;
       color: var(--font-color-gold);
       background-color: var(--btn-background);
       border-radius: 5px;
       transition: all 0.5s;
-      .icon-tag {
-        font-size: 1vw;
-      }
+
       &:hover {
         background-color: var(--btn-hover);
         color: var(--font-color-gold);
@@ -215,16 +241,14 @@ const finalPosts = computed(() => {
 }
 
 .excerpt {
-  padding: 0 2.5vw;
-  margin-bottom: 1vh;
-  font-size: 0.85vw;
+  padding: 0 40px;
 }
 
 .pagination {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 5vh;
+  margin-top: 50px;
   padding: 0;
 
   button {
@@ -239,7 +263,7 @@ const finalPosts = computed(() => {
   }
 
   .icon-arrow {
-    font-size: 2vw;
+    font-size: 36px;
     color: var(--icon-color);
   }
 
@@ -275,65 +299,65 @@ const finalPosts = computed(() => {
 @media (max-width: 768px) {
   .posts-list {
     .post {
-      margin-bottom: 3vh;
-      border-radius: 3vh;
-      border-left: solid 1.5vh #c7e4f6;
+      margin: 0 8px 30px 8px;
+      background-size: cover;
+      border-left: solid 1.5vh var(--pot-border-left);
+      .pinned {
+        width: 27px;
+        height: 27px;
+        top: -2px;
+        right: 12px;
+      }
     }
   }
 
   .post-header {
-    padding: 2vh 6vw 0;
-
+    padding: 20px 35px 0;
+    .name {
+      font-size: 24px;
+    }
     .title {
-      margin-bottom: 1vh;
-      font-size: 1.5vh;
+      margin-bottom: 6px;
 
       .title-dot {
-        width: 4px;
-        height: 2vh;
-        left: -3vw;
-        top: 0.8vh;
+        height: 18px;
+        top: 6px;
       }
     }
-
     .meta-info-bar {
-      margin-bottom: 0.4vh;
-      font-size: 1.3vh;
-
+      margin-bottom: 4px;
+      font-size: 12px;
+      .time {
+        font-size: 8px !important;
+        margin: 3px 2px 0 0!important;
+      }
       .seperator::before {
-        height: 0.4vh;
-        width: 0.4vh;
-        margin: 0 0.8vh;
+        margin: 0 8px;
       }
     }
   }
-
   .tags {
     li {
-      padding-top: 0.8vh;
-      margin-right: 1vh;
-
+      padding-top: 4px;
+      margin-right: 8px;
       a {
-        font-size: 1.3vh;
-        padding: 0.5vh 1.2vw;
+        font-size: 12px;
+        padding: 4px 6px;
         .icon-tag {
-          font-size: 1.2vh;
+          font-size: 12px;
         }
       }
     }
   }
-
   .excerpt {
-    padding: 0 6vw;
-    margin-bottom: 1vh;
-    font-size: 1.2vh;
+    padding: 0 36px;
+    margin-bottom: 4px;
+    font-size: 12px;
   }
-
   .pagination {
-    margin-top: 5vh;
-
+    margin-top: 32px;
     .icon-arrow {
-      font-size: 4vh;
+      font-size: 32px;
     }
   }
 }

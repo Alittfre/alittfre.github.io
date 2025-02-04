@@ -11,6 +11,9 @@ export interface ThemeConfig {
   motto: string[]
   social: { icon: string; url: string }[]
 
+  //spine
+  spineVoiceLang: 'zh' | 'jp'
+
   //footer
   footerName: string
   poweredList: { name: string; url: string }[]
@@ -83,6 +86,9 @@ export default defineConfigWithTheme<ThemeConfig>({
       { icon: 'bilibili', url: 'https://space.bilibili.com/7663236' },
     ],
 
+    //spine语音配置，可选zh/jp
+    spineVoiceLang: 'jp',
+
     //footer配置
     footerName: 'Alittfre',
     poweredList: [
@@ -98,7 +104,7 @@ export default defineConfigWithTheme<ThemeConfig>({
     admin: ['Alittfre'],
   },
   markdown: {
-    theme: 'github-light',
+    theme: 'solarized-dark',
     lineNumbers: true,
     math: true,
     config: (md) => {

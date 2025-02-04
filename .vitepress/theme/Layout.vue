@@ -19,7 +19,7 @@
     </main>
     <Footer></Footer>
     <Fireworks v-if="state.fireworksEnabled"></Fireworks>
-    <SpinePlayer v-show="state.SpinePlayerEnabled"></SpinePlayer>
+    <SpinePlayer></SpinePlayer>
     <ToTop></ToTop>
     <!-- 背景音乐元素 -->
     <audio id="background-music" loop>
@@ -69,12 +69,12 @@ html {
 }
 
 .container {
-  width: 75vw;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
 body {
-  background-image: url('./assets/background.svg');
+  background-image: var(--theme-background-image);
   background-color: var(--general-background-color);
   background-size: cover;
   background-repeat: no-repeat;
@@ -84,6 +84,15 @@ body {
   overflow-x: hidden;
   color: var(--font-color-grey);
   font-family: 'Blueaka', sans-serif;
+  transition: background-image 0.5s, background-color 0.5s;
+}
+
+:root[theme='light'] {
+  --theme-background-image: url('./assets/background.svg');
+}
+
+:root[theme='dark'] {
+  --theme-background-image: url('./assets/background_dark.svg');
 }
 
 ul {

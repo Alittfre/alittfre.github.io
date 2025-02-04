@@ -32,10 +32,10 @@ onUnmounted(() => {
   position: fixed;
   z-index: 100;
   right: 3%;
-  filter: drop-shadow(0 0 3px rgba(40, 42, 44, 0.42));
+  filter: drop-shadow(0 0 8px #7171a9);
   transition: all 0.5s;
   img {
-    width: 5vw;
+    width: 85px;
   }
 }
 @media (max-width: 768px) {

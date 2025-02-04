@@ -23,12 +23,13 @@ BA 主题博客，基于 VitePress，绝赞画饼中
 - [x] 优化 404
 - [x] Arona 的 spine 模型
 - [x] 首屏加载动画
+- [x] 夜间模式 @naahi-i
 
 ## 画饼
 
+- [ ] 重构排版
 - [ ] RSS
-- [ ] 夜间模式
-- [ ] 为 Arona 添加更多交互
+- [ ] 为 Arona/plana 添加更多交互
 - [ ] 让点击烟花更还原游戏效果
 - [ ] 骨架屏
 - [ ] more...
@@ -36,6 +37,7 @@ BA 主题博客，基于 VitePress，绝赞画饼中
 ## 主题配置
 
 **音乐** **首页背景** **头像**在`.vitepress/theme/assets/banner`
+可单独设置暗色模式首页背景，命名为`banner_dark.jpg`
 
 **配置文件**在`.vitepress/config.mts`
 
@@ -95,6 +97,7 @@ export default defineConfigWithTheme<ThemeConfig>({
 title: 标题
 date: 日期
 tags: [标签1, 标签2]
+pinned: true 文章置顶，默认false
 head:
   - - meta
     - name: description
