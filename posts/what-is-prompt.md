@@ -131,7 +131,7 @@ Prompt 是生成式人工智能的一种指令技术，通过人类语言引导�
 
 输出图片：
 
-> ![coffee shop girl](/post_pic/what-is-prompt_1.png)
+> ![coffee shop girl](/post_pic/what-is-prompt_1.webp)
 
 以上的 Prompt 中有
 
@@ -216,7 +216,7 @@ Prompt 是生成式人工智能的一种指令技术，通过人类语言引导�
 
 输出图片：
 
-> ![tree and girl simple prompt](/post_pic/what-is-prompt_2.png)
+> ![tree and girl simple prompt](/post_pic/what-is-prompt_2.webp)
 
 ---
 
@@ -230,7 +230,7 @@ Prompt 是生成式人工智能的一种指令技术，通过人类语言引导�
 
 输出图片：
 
-> ![tree and girl complex prompt](/post_pic/what-is-prompt_3.png)
+> ![tree and girl complex prompt](/post_pic/what-is-prompt_3.webp)
 
 以上结果其实我有些意外，我个人更喜欢第一张，但论画面的精细程度还是第二张略胜一筹。这其实也体现了图像生成类 AI 的 Prompt 不是控制图像效果的唯一维度，其更加复杂。（~~其实这里造成差异的原因是 Animagine-xl-3.1 的`masterpiece, best quality`标签在训练中的数据集大多来源于本子，所以略显油腻，也是负面 Prompt 为什么要加入`nsfw`的原因~~）
 

@@ -32,7 +32,7 @@ chroot 环境的安装参考自：[\[Root\] 手機 Termux 建立 chroot Ubuntu �
 
 本次测试手机：Redmi Note 7 ,4+64 版本,搭载基于安卓 13 的 Arrow OS
 
-<img src="/post_pic/android-autobangumi-lavender-info.png" alt="Redmi Note 7" data-fancybox="gallery" height="600" />
+<img src="/post_pic/android-autobangumi-lavender-info.webp" alt="Redmi Note 7" data-fancybox="gallery" height="600" />
 
 ---
 
@@ -386,7 +386,7 @@ sh run_AB.sh
 
 这一步因路由器固件而异，进入路由器后台，固定手机局域网 IP，通常在内网 DHCP 服务器设置
 
-<img src="/post_pic/android-autobangumi-fix-ip.png" alt="fix-ip" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-fix-ip.webp" alt="fix-ip" data-fancybox="gallery" width="600" />
 
 2. 配置 qBittorrent
 
@@ -394,23 +394,23 @@ sh run_AB.sh
 
 默认用户名：admin，默认密码：adminadmin
 
-<img src="/post_pic/android-autobangumi-qbit-login.png" alt="qbit-login" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-qbit-login.webp" alt="qbit-login" data-fancybox="gallery" width="600" />
 
 登录后进入主界面，点击顶栏的蓝色齿轮开始配置
 
-<img src="/post_pic/android-autobangumi-qbit-main.png" alt="qbit-main" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-qbit-main.webp" alt="qbit-main" data-fancybox="gallery" width="600" />
 
 ### 默认保存路径配置为`/home/user/downloads/Bangumi`
 
-<img src="/post_pic/android-autobangumi-qbit-setting1.png" alt=qbit-setting1 data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-qbit-setting1.webp" alt=qbit-setting1 data-fancybox="gallery" width="600" />
 
 ### 连接设置如图
 
-<img src="/post_pic/android-autobangumi-qbit-setting2.png" alt="qbit-setting2" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-qbit-setting2.webp" alt="qbit-setting2" data-fancybox="gallery" width="600" />
 
 ### BitTorrent 设置如图
 
-<img src="/post_pic/android-autobangumi-qbit-setting3.png" alt="qbit-setting3" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-qbit-setting3.webp" alt="qbit-setting3" data-fancybox="gallery" width="600" />
 
 Tracker 列表
 
@@ -449,13 +449,13 @@ udp://tracker.sylphix.com:6969/announce
 
 默认用户名：admin，默认密码：adminadmin
 
-<img src="/post_pic/android-autobangumi-AB-login.png" alt="AB-login" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-AB-login.webp" alt="AB-login" data-fancybox="gallery" width="600" />
 
 进入后点击左侧齿轮配置下载设置和代理设置
 
 下载配置主要对接 qBittorrent，代理设置主要优化 RSS 订阅的可靠性
 
-<img src="/post_pic/android-autobangumi-AB-setting.png" alt="AB-setting" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-AB-setting.webp" alt="AB-setting" data-fancybox="gallery" width="600" />
 
 3. 配置 Jellyfin
 
@@ -469,10 +469,10 @@ udp://tracker.sylphix.com:6969/announce
 
 [利用 Jellyfin + Bangumi 打造更舒适的动画媒体库](https://www.himiku.com/archives/deploy-a-more-comfortable-animation-library-with-jellyfin-and-bangumi.html)
 
-<img src="/post_pic/android-autobangumi-jellyfin1.png" alt="jellyfin" data-fancybox="gallery" width="600" />
-<img src="/post_pic/android-autobangumi-jellyfin2.png" alt="jellyfin" data-fancybox="gallery" width="600" />
-<img src="/post_pic/android-autobangumi-jellyfin3.png" alt="jellyfin" data-fancybox="gallery" width="600" />
-<img src="/post_pic/android-autobangumi-jellyfin4.png" alt="jellyfin" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-jellyfin1.webp" alt="jellyfin" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-jellyfin2.webp" alt="jellyfin" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-jellyfin3.webp" alt="jellyfin" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-jellyfin4.webp" alt="jellyfin" data-fancybox="gallery" width="600" />
 
 配置完后的效果展示，还是很有 b 格的 😋
 
@@ -485,10 +485,10 @@ udp://tracker.sylphix.com:6969/announce
 
 本次测试手机安装完 ACC 模块后在终端输入`acc 3900`后即可控制电量在 50% 左右
 
-<img src="/post_pic/android-autobangumi-acc.png" alt="acc" data-fancybox="gallery" height="600" />
+<img src="/post_pic/android-autobangumi-acc.webp" alt="acc" data-fancybox="gallery" height="600" />
 
 # 结语
 
 其实在大概两个月前就跑通了以上流程，之后一直没有时间记录。而两个月时间也没出什么大的问题，稳定性还是可以的，最后附上截至文章完成时的运行状态
 
-<img src="/post_pic/android-autobangumi-uptime.png" alt="uptime" data-fancybox="gallery" width="600" />
+<img src="/post_pic/android-autobangumi-uptime.webp" alt="uptime" data-fancybox="gallery" width="600" />
