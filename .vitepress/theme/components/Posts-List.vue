@@ -4,62 +4,107 @@
       <article class="post" v-for="post in postsList" :key="post.href">
         <span v-if="post.pinned" class="pinned"></span>
         <header class="post-header">
-          <div class="title">
-            <div class="title-dot"></div>
-            <h1 class="name">
-              <a :href="base + post.href">{{ post.title }}</a>
-            </h1>
+          <div v-if="post.cover" class="cover-container">
+            <img
+              :src="post.cover"
+              class="cover-image"
+              :alt="post.title + '-cover'"
+              loading="lazy"
+            />
           </div>
-          <div class="meta-info-bar">
-            <span class="iconfont icon-time time"></span>
-            <div class="time-info">
-              <time datetime="">{{ formatDate(post.create) }}</time>
+          <div class="header-content">
+            <div class="title">
+              <div class="title-dot" v-if="!post.cover"></div>
+              <h1 class="name">
+                <a :href="base + post.href">{{ post.title }}</a>
+              </h1>
             </div>
-            <div class="wordcount seperator">约{{ post.wordCount }}字</div>
+            <div class="meta-info-bar">
+              <span class="iconfont icon-time time"></span>
+              <div class="time-info">
+                <time datetime="">{{ formatDate(post.create) }}</time>
+              </div>
+              <div class="wordcount seperator">约{{ post.wordCount }}字</div>
+            </div>
+            <ul class="tags">
+              <li v-for="tag in post.tags">
+                <a :href="`${base}tags/`" @click="state.currTag = tag"
+                  ><i class="iconfont icon-tag"></i> {{ tag }}</a
+                >
+              </li>
+            </ul>
+            <div class="excerpt">
+              <p>{{ post.excerpt }}</p>
+            </div>
           </div>
-          <ul class="tags">
-            <li v-for="tag in post.tags">
-              <a :href="`${base}tags/`" @click="state.currTag = tag"
-                ><i class="iconfont icon-tag"></i> {{ tag }}</a
-              >
-            </li>
-          </ul>
         </header>
-        <div class="excerpt">
-          <p>{{ post.excerpt }}</p>
-        </div>
       </article>
     </TransitionGroup>
-    <span v-if="totalPage != 1" class="pagination">
+    <div v-if="totalPage != 1" class="pagination">
       <button
         :disabled="currPage === 1"
         :class="{ hide: currPage === 1 }"
         id="up"
-        @click="currPage--"
+        @click="goToPage(currPage - 1)"
       >
         <i class="iconfont icon-arrow"></i>
       </button>
-      <span>{{ currPage }} / {{ totalPage }}</span>
+
+      <div class="page-numbers">
+        <!-- 第一页 -->
+        <button class="page-number" :class="{ active: currPage === 1 }" @click="goToPage(1)">
+          1
+        </button>
+
+        <!-- 页码省略号 -->
+        <span v-if="showLeftEllipsis" class="ellipsis">...</span>
+
+        <!-- 当前页码 -->
+        <button
+          v-for="page in visiblePageNumbers"
+          :key="page"
+          class="page-number"
+          :class="{ active: currPage === page }"
+          @click="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+
+        <!-- 页码省略号 -->
+        <span v-if="showRightEllipsis" class="ellipsis">...</span>
+
+        <!-- 尾页 -->
+        <button
+          v-if="totalPage > 1"
+          class="page-number"
+          :class="{ active: currPage === totalPage }"
+          @click="goToPage(totalPage)"
+        >
+          {{ totalPage }}
+        </button>
+      </div>
+
       <button
         :disabled="currPage >= totalPage"
         :class="{ hide: currPage >= totalPage }"
         id="next"
-        @click="currPage++"
+        @click="goToPage(currPage + 1)"
       >
         <i class="iconfont icon-arrow"></i>
       </button>
-    </span>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 import { useData } from 'vitepress'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { data as posts } from '../utils/posts.data'
 import { useStore } from '../store'
 const { state } = useStore()
 const { page } = useData()
 const base = useData().site.value.base
 
+// 日期格式化
 function formatDate(timestamp: number): string {
   const date = new Date(timestamp)
   return new Intl.DateTimeFormat('zh-CN', {
@@ -68,8 +113,106 @@ function formatDate(timestamp: number): string {
     day: '2-digit',
   }).format(date)
 }
-const currPage = ref(1)
+
+// 文章传值
+const finalPosts = computed(() => {
+  if (page.value.filePath === 'index.md') {
+    return posts
+  } else if (page.value.filePath === 'tags/index.md') {
+    return state.selectedPosts
+  }
+  return []
+})
+
+// 文章列表长度
 const pageSize = ref(5)
+
+// 使用store中的currPage
+const currPage = computed({
+  get: () => state.currPage,
+  set: (value) => (state.currPage = value),
+})
+
+// 获取URL信息
+onMounted(() => {
+  updatePageFromUrl()
+})
+const url = new URL(window.location.href)
+function updatePageFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search)
+  const pageParam = urlParams.get('page')
+  if (
+    pageParam &&
+    !isNaN(parseInt(pageParam)) &&
+    parseInt(pageParam) > 0 &&
+    parseInt(pageParam) <= totalPage.value
+  ) {
+    state.currPage = parseInt(pageParam)
+  } else {
+    state.currPage = 1
+  }
+}
+
+// 更新页码逻辑
+function goToPage(page: number) {
+  if (page < 1 || page > totalPage.value) return
+  state.currPage = page
+
+  // 获取URL信息
+  const url = new URL(window.location.href)
+
+  // 非首页时获取URL页码
+  if (page > 1) {
+    url.searchParams.set('page', page.toString())
+  } else {
+    url.searchParams.delete('page')
+  }
+
+  // Tag页面页码逻辑
+  const tagParam = url.searchParams.get('tag')
+  if (tagParam) {
+    url.searchParams.set('tag', tagParam)
+  }
+
+  window.history.pushState({}, '', url.toString())
+}
+
+// 监听前进后退
+onMounted(() => {
+  window.addEventListener('popstate', () => {
+    updatePageFromUrl()
+  })
+})
+
+// 计算要显示的页码
+const maxVisiblePages = 3 // 省略号两边显示的页码按钮数量
+const visiblePageNumbers = computed(() => {
+  if (totalPage.value <= 7)
+    return Array.from({ length: totalPage.value - 2 }, (_, i) => i + 2).filter(
+      (p) => p > 1 && p < totalPage.value,
+    )
+
+  let startPage = Math.max(2, currPage.value - Math.floor(maxVisiblePages / 2))
+  let endPage = Math.min(totalPage.value - 1, startPage + maxVisiblePages - 1)
+
+  if (endPage - startPage < maxVisiblePages - 1) {
+    startPage = Math.max(2, endPage - maxVisiblePages + 1)
+  }
+
+  return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i)
+})
+
+// 省略号显示逻辑
+const showLeftEllipsis = computed(() => {
+  return totalPage.value > 7 && visiblePageNumbers.value[0] > 2
+})
+
+const showRightEllipsis = computed(() => {
+  return (
+    totalPage.value > 7 &&
+    visiblePageNumbers.value[visiblePageNumbers.value.length - 1] < totalPage.value - 1
+  )
+})
 const postsList = computed(() => {
   return finalPosts.value.slice(
     (currPage.value - 1) * pageSize.value,
@@ -80,17 +223,29 @@ const totalPage = computed(() => {
   return Math.ceil(finalPosts.value.length / pageSize.value) || 1
 })
 
-// 文章传值
-const finalPosts = computed(() => {
-  if (page.value.filePath === 'index.md') {
-    currPage.value = 1
-    return posts
-  } else if (page.value.filePath === 'tags/index.md') {
-    currPage.value = 1
-    return state.selectedPosts
-  }
-  return []
-})
+// 监听文章列表
+watch(
+  () => state.selectedPosts,
+  () => {
+    // 标签页逻辑，获取URL页码
+    const urlParams = new URLSearchParams(window.location.search)
+    const pageParam = urlParams.get('page')
+
+    // 标签更改时重置页码
+    const newTotalPages = Math.ceil(state.selectedPosts.length / pageSize.value) || 1
+
+    if (!pageParam || currPage.value > newTotalPages) {
+      currPage.value = 1
+
+      // 更新URL
+      if (pageParam) {
+        const url = new URL(window.location.href)
+        url.searchParams.delete('page')
+        window.history.pushState({}, '', url.toString())
+      }
+    }
+  },
+)
 </script>
 <style scoped lang="less">
 .list-move,
@@ -147,6 +302,65 @@ const finalPosts = computed(() => {
       background: var(--icon-pinned) no-repeat;
       background-size: contain;
       box-shadow: 0 0 6px rgba(var(--blue-shadow-color), 0.65);
+    }
+
+    .post-header {
+      display: flex;
+      gap: 24px;
+      padding: 32px 40px 0;
+      // flex-direction: row-reverse;
+      position: relative;
+      align-items: stretch;
+
+      .cover-container {
+        flex: 0 0 180px;
+        height: 140px;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        margin-left: -8px;
+        margin-bottom: 15px;
+        align-self: center;
+        .cover-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+      }
+
+      .header-content {
+        flex: 1;
+        min-width: 0;
+        flex-direction: column;
+        .title {
+          position: relative;
+          margin-bottom: 8px;
+        }
+        .excerpt {
+          flex: 1;
+          display: flex;
+          align-items: flex-end;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      .post-header {
+        flex-direction: column;
+        gap: 16px;
+        padding: 24px 20px 0;
+
+        .cover-container {
+          flex: none;
+          width: 100%;
+          height: 240px;
+          margin-left: 0;
+        }
+      }
     }
   }
 }
@@ -240,10 +454,6 @@ const finalPosts = computed(() => {
   }
 }
 
-.excerpt {
-  padding: 0 40px;
-}
-
 .pagination {
   display: flex;
   align-items: center;
@@ -273,6 +483,40 @@ const finalPosts = computed(() => {
 
   #next {
     animation: arrow-next 1s ease-in-out infinite alternate;
+  }
+
+  .page-numbers {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .page-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    border-radius: 6px;
+    color: var(--icon-color);
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: var(--btn-hover);
+      color: var(--font-color-gold);
+    }
+
+    &.active {
+      background-color: var(--btn-hover);
+      color: var(--font-color-gold);
+      font-weight: bold;
+    }
+  }
+
+  .ellipsis {
+    margin: 0 4px;
+    color: var(--icon-color);
   }
 }
 
@@ -329,7 +573,7 @@ const finalPosts = computed(() => {
       font-size: 12px;
       .time {
         font-size: 8px !important;
-        margin: 3px 2px 0 0!important;
+        margin: 3px 2px 0 0 !important;
       }
       .seperator::before {
         margin: 0 8px;
@@ -358,6 +602,14 @@ const finalPosts = computed(() => {
     margin-top: 32px;
     .icon-arrow {
       font-size: 32px;
+    }
+    .page-number {
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+    }
+    .page-numbers {
+      gap: 4px;
     }
   }
 }
